@@ -19,15 +19,17 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from sklearn.ensemble import RandomForestClassifier
-
+import os
+import json
 app=Flask(__name__)
 all_tweets=[]
 
 @app.route("/") #main page
 def home_page():
-    return render_template('index.ejs',all_tweets=all_tweets)
+    return "please work"
+    # return render_template('index.ejs',all_tweets=all_tweets)
 
-@app.route('/',methods = ['POST', 'GET'])
+@app.route('/',methods = ['POST'])
 def predict():
     result=-1
     all_tweets=[]
@@ -55,9 +57,10 @@ def predict():
         result = model.predict(all_features.values)
         print(result)
         all_tweets=store_tweet(data,result)
-        return render_template('index.ejs',result=result,all_tweets=all_tweets)
-        
-    return render_template('index.ejs')
+        return json.dumps({"result":result.tolist()}) 
+        #return render_template('index.ejs',result=result,all_tweets=all_tweets)
+    return result
+    #return render_template('index.ejs')
 
 def store_tweet(tweet, result):
     global all_tweets
@@ -203,3 +206,11 @@ def set_action(id):
 
 if __name__=="__main__":
     app.run(debug=True) 
+
+# if __name__ == "__main__":
+#     osPort = os.getenv("PORT")
+#     if osPort == None:
+#         port = 5000
+#     else:
+#         port = int(osPort)
+#     app.run(host='0.0.0.0', port=port)
