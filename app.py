@@ -55,9 +55,22 @@ def predict():
         result = model.predict(all_features.values)
         print(result)
         all_tweets=store_tweet(data,result)
-        return render_template('index.ejs',result=result,all_tweets=all_tweets)
+        tweetID=all_tweets[-1]['id']
+        return render_template('index.ejs',result=result,all_tweets=all_tweets,showResultModal=True,tweetID=tweetID)
         
     return render_template('index.ejs')
+
+@app.route('/<int:id>',methods = ['PUT','GET'])
+def set_action(id):
+    if request.method=='GET':
+        print(request.args.get('action'))
+        action=request.args.get('action')
+        global all_tweets
+        #print(len(all_tweets))
+        all_tweets[id-1]['action']=int(action)
+        print(all_tweets)
+    return render_template('index.ejs',all_tweets=all_tweets,showInfoModal=True,tweetID=id)
+
 
 def store_tweet(tweet, result):
     global all_tweets
@@ -66,7 +79,7 @@ def store_tweet(tweet, result):
         "content":tweet,
         "author":"helensmith",
         "date_time":"2022-07-08 18:37:12",
-        "location":"Charlotte, North Carolina",
+        "location":"-105.109815, 39.614151",
         "risk_level":result,
         "action":-1 
     }
@@ -192,13 +205,7 @@ def extract_sentiment(full_text):
 
     return score
 
-@app.route('/<int:id>',methods = ['PUT'])
-def set_action(id):
-    action=request.form['action']
-    global all_tweets
-    print(len(all_tweets))
-    all_tweets[id]['action']=action
-    return render_template('index.ejs',all_tweets=all_tweets)
+
 
 
 if __name__=="__main__":

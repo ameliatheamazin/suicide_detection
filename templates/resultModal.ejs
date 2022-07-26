@@ -1,0 +1,45 @@
+<div id="resultModal">
+    <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Prediction Result</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+               
+                    <div class="modal-body">
+                        <i class="fas fa-bell fa-4x animated rotateIn mb-4"></i>
+                        <p>Result</p>
+                        {% if result==0 %}
+                        <span>No risk detected</span>
+
+                        {% elif result==1 %}
+                        <span>Medium risk detected</span>
+                        <h3>Default message was sent to @{{ all_tweets[tweetID-1]['author']}} </h3>
+                        <h2>Hi there. We've curated the following links-</h2><br>
+                        <ol>In case you need someone to talk to
+                            <li>Suicide & Crisis Lifeline: Dial 988</li>
+                            <li>Lifeline web chat</li>
+                            <li>Crisis Text Line: Text “HELLO” to 741741</li>
+
+                        </ol>
+                        <ol>In case you need some professional help
+                            <li>Find Treatment https://findtreatment.gov/</li>
+                            <li>Find a Psychiatrist: https://finder.psychiatry.org/?_ga=1.178573348.1294726899.1456165962</li>
+
+                        </ol>
+                        {% else %}
+                        <span>High risk detected. Tweet flagged for further review. </span>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        
+                    </div>
+               
+            </div>
+        </div>
+    </div>
+</div>  
+
+
+  
