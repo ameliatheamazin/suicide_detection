@@ -63,7 +63,15 @@
                 <div role="tabpanel">
                     <!-- List group -->
                     <div class="list-group justify-content-center flex-row mb-2" id="myList" role="tablist">
-                            <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#pending" role="tab">Pending Review</a>
+                        
+                        <button class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#pending" role="tab" style="outline:none;">
+                            Pending Review
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                99+
+                                <span class="visually-hidden">unread messages</span>
+                              </span>
+                        </button>
+                            
                             
                             <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#viewAll" role="tab">View All Tweets</a>
                     </div>
