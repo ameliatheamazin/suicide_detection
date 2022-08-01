@@ -9,12 +9,12 @@
                
                     <div class="modal-body">
                         <i class="fas fa-bell fa-4x animated rotateIn mb-4"></i>
-                        <p>Result</p>
+                        <p class="lead">Result:</p>
                         {% if result==0 %}
-                        <span>No risk detected</span>
+                        <span class="badge bg-secondary fs-5">No risk detected</span>
 
                         {% elif result==1 %}
-                        <span>Medium risk detected</span>
+                        <span class="badge bg-success fs-5">Medium risk detected</span>
                         <h3>Default message was sent to @{{ all_tweets[tweetID-1]['author']}} </h3>
                         <h2>Hi there. We've curated the following links-</h2><br>
                         <ol>In case you need someone to talk to
@@ -29,11 +29,11 @@
 
                         </ol>
                         {% else %}
-                        <span>High risk detected. Tweet flagged for further review. </span>
+                        <span class="badge bg-warning text-dark fs-5">High risk detected. Tweet flagged for further review. </span>
                         {% endif %}
                     </div>
                     <div class="modal-footer">
-                        
+                        <button type="button" class="btn btn-primary">Ok</button>
                     </div>
                
             </div>

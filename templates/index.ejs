@@ -44,7 +44,7 @@
                         <form action="http://127.0.0.1:5000/" method="POST">
                             <div class="modal-body">
                                 <div class="mb-3">
-                                    <label for="tweet" class="col-form-label">Enter a tweet:</label><br>
+                                    <label for="tweet" class="col-form-label" style="font-weight: bold;">Enter a tweet:</label><br>
                                     <textarea type="text" name="tweet" rows="4" cols="50" class="form-control" placeholder="What's happenning?"></textarea>
                                 </div>
                             </div>
@@ -66,10 +66,15 @@
                         
                         <button class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#pending" role="tab" style="outline:none;">
                             Pending Review
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                99+
-                                <span class="visually-hidden">unread messages</span>
+                            {% if all_tweets %}
+                            {% for tweet in all_tweets  %}
+                            {% if tweet.action==-1 and tweet.risk_level==2 %}
+                            <span class="position-absolute top-0 start-0 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                <span class="visually-hidden">New alerts</span>
                               </span>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
                         </button>
                             
                             
@@ -80,8 +85,8 @@
                     <div class="tab-content row">
                         <!--Pending Tab-->
                         <div class="tab-pane active" id="pending" role="tabpanel">
-                            <table class="table">
-                                <thead>
+                            <table class="table align-middle mb-0 bg-white table-bordered mt-3 table-hover">
+                                <thead class="bg-light">
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Content</th>
@@ -118,8 +123,8 @@
                         
                         <!--All Tweets Tab-->
                         <div class="tab-pane" id="viewAll" role="tabpanel">
-                            <table class="table">
-                                <thead>
+                            <table class="table align-middle mb-0 bg-white table-bordered mt-3 table-hover">
+                                <thead class="bg-light">
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Content</th>
@@ -141,26 +146,27 @@
                                         <td> {{ tweet.date_time }}</td>
                                         <td> {{ tweet.location }}</td>
                                         <td> 
+                                        
                                          {% if tweet.action==-1%}
-                                         {% if tweet.risk_level==0 %}
-                                            No risk detected
+                                            {% if tweet.risk_level==0 %}
+                                            <span class="badge bg-secondary"> No risk detected
                                             {% elif tweet.risk_level==1 %}
-                                            Default message sent
+                                            <span class="badge bg-success">Default message sent
                                             {% else %}
-                                            Pending Review
+                                            <span class="badge bg-warning text-dark">Pending Review
                                          {% endif %}
                                          
                                          {% elif tweet.action==0 %}
-                                        Safe to Ignore. Default message sent
-                                        
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}">open</a>
+                                         <span class="badge bg-success">Safe to Ignore. Default message sent
+                                        </span>
+                                        <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark" href="#" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}">Update Action</button>
                                          {% else %}
-                                         Alert the Authorities
-                                         <a href="#" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}">open</a>
+                                         <span class="badge bg-warning text-dark"></span>Alert the Authorities
+                                         <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark"  href="#" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}">Update Action</button>
                                          
                                           {% endif %}
                                           
-                                         
+                                        
                                         <!-- Modal -->
                                        
                                         

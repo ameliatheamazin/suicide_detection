@@ -6,16 +6,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{url_for('set_action', id=tweet.id)}}" method="PUT">
-                {{ tweet.id }}
+                
                 <div class="modal-body">
                     <div class="mb-3">
-                        <h3>{{ tweet.content }}</h3>
-                        <label for="tweet" class="col-form-label">Action:</label><br>
+                        <label for="tweet" class="col-form-label" style="font-weight: bold;">Tweet Content:</label><br>
+                        <p class="lead">{{ tweet.content }}</p>
+                        <label for="tweet" class="col-form-label" style="font-weight: bold;">Action:</label><br>
                         <select name="action" class="form-select">
-                            <option value>Select an action</option>
+                            <option value>Please select an action</option>
                             <option value="0">Safe to Ignore</option>
                             <option value="1">Alert the Authorities</option>
                         </select>
+                        
                     </div>
                 </div>
                 <div class="modal-footer">
