@@ -18,12 +18,12 @@
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
 
-        <nav class="navbar navbar-dark bg-dark">
+        <nav class="navbar" style="background-color: #242424;">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Suicide Detection System</a>
+              <a class="navbar-brand" href="#" style="color:white">Suicide Detection System</a>
               <div class="d-flex">
                 <div class="navbar-nav">
-                    <a class="btn btn-lg btn-success"  onclick="showCreateModal()">Create Tweet</a>
+                    <a class="btn btn-lg"  onclick="showCreateModal()" style="background-color:#988829">Create Tweet</a>
                 </div>
               </div>
             </div>
@@ -76,8 +76,6 @@
                             {% endfor %}
                             {% endif %}
                         </button>
-                            
-                            
                             <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#viewAll" role="tab">View All Tweets</a>
                     </div>
                 </div> 
@@ -107,7 +105,7 @@
                                         <td> {{ tweet.author }}</li>
                                         <td> {{ tweet.date_time }}</li>
                                         <td> {{ tweet.location }}</li>
-                                        <td> <a class="btn btn-lg btn-success" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}">Select Action</a></li>
+                                        <td> <a class="btn" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}" style="background-color: 	#505c7c;color:white">Select Action</a></li>
                                     
                                 </tr>
                                 <!-- Modal -->
@@ -161,8 +159,8 @@
                                         </span>
                                         <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark" href="#" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}">Update Action</button>
                                          {% else %}
-                                         <span class="badge bg-warning text-dark"></span>Alert the Authorities
-                                         <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark"  href="#" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}">Update Action</button>
+                                         <span class="badge bg-warning text-dark">Alert the Authorities</span>
+                                         <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark"  href="#" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}" >Update Action</button>
                                          
                                           {% endif %}
                                           
