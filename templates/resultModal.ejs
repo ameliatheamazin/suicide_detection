@@ -11,35 +11,34 @@
                         <i class="fas fa-bell fa-4x animated rotateIn mb-4"></i>
                         <p class="lead">Result:</p>
                         {% if result==0 %}
-                        <span class="badge bg-secondary text-wrap fs-6">No risk detected</span>
+                        <span class="badge text-wrap fs-6" style="background-color:rgb(54, 162, 235)">No risk detected</span>
 
                         {% elif result==1 %}
-                        <span class="badge bg-success text-wrap fs-6">Medium risk detected</span>
+                        <span class="badge bg-warning text-dark text-wrap fs-6">Medium risk detected</span>
                         <br><br>
                         <p style="font-size: medium;">
-                            <strong>The following default message was sent to @{{ all_tweets[tweetID-1]['author']}} : </strong>
+                            <strong>The following default message was sent to <a href="https://www.twitter.com/{{all_tweets[tweetID-1]['author']}}">@{{all_tweets[tweetID-1]['author']}}</a> : </strong>
                         </p>
                         <div style="background-color: #E5E4E2; color: #36454F; font-style: italic; border-radius: 25px; padding: 25px;"> 
-                              <p>Hi there. We've curated the following links:
-                                In case you need someone to talk to
+                              <p>Hi there. We've curated the following links-<br>
+                                In case you need someone to talk to:
                                 <ol>
-                                    <li>Suicide & Crisis Lifeline: Dial 988</li>
-                                    <li>Lifeline web chat</li>
-                                    <li>Crisis Text Line: Text “HELLO” to 741741</li>
+                                    <li>Suicide & Crisis Lifeline: Dial <a href="tel:988">988</a></li>
+                                    <li>Lifeline <a href="https://988lifeline.org/chat/">web chat</a></li>
+                                    <li>Crisis Text Line: Text “HELLO” to <a href="tel:741741">741741</a></li>
         
                                 </ol>
-                                In case you need some professional help
+                                In case you need some professional help:
                                 <ol>
-                                    <li>Find Treatment https://findtreatment.gov/</li>
-                                    <li>Find a Psychiatrist: https://finder.psychiatry.org/?_ga=1.178573348.1294726899.1456165962</li>
-        
+                                    <li>Find <a href="https://findtreatment.gov/">Treatment</a></li>
+                                    <li>Find a <a href="https://finder.psychiatry.org/?_ga=1.178573348.1294726899.1456165962">Psychiatrist</a></li>
                                 </ol>
                               </p>
                           </div>
                         
 
                         {% else %}
-                        <span class="badge bg-warning text-dark text-wrap fs-6">High risk detected. Tweet flagged for further review. </span>
+                        <span class="badge btn-danger text-wrap fs-6">High risk detected. Tweet flagged for further review. </span>
                         {% endif %}
                     </div>
                     <div class="modal-footer">

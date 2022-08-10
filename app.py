@@ -56,7 +56,9 @@ def predict():
         print(result)
         all_tweets=store_tweet(data,result)
         tweetID=all_tweets[-1]['id']
-        return render_template('index.ejs',result=result,all_tweets=all_tweets,showResultModal=True,tweetID=tweetID)
+        risk_values = [tweet.get('risk_level') for tweet in all_tweets]
+        risk_totals=get_risk_totals()
+        return render_template('index.ejs',result=result,all_tweets=all_tweets,showResultModal=True,tweetID=tweetID, risk_values=risk_values,risk_totals=risk_totals)
         
     return render_template('index.ejs')
 
@@ -71,6 +73,13 @@ def set_action(id):
         print(all_tweets)
     return render_template('index.ejs',all_tweets=all_tweets,showInfoModal=True,tweetID=id)
 
+def get_risk_totals():
+     global all_tweets
+     risk_totals=[]
+     risk_totals.append(sum(tweet.get('risk_level')==0 for tweet in all_tweets))
+     risk_totals.append(sum(tweet.get('risk_level')==1 for tweet in all_tweets))
+     risk_totals.append(sum(tweet.get('risk_level')==2 for tweet in all_tweets))
+     return risk_totals
 
 def store_tweet(tweet, result):
     global all_tweets
@@ -80,7 +89,7 @@ def store_tweet(tweet, result):
         "author":"helensmith",
         "date_time":"2022-07-08 18:37:12",
         "location":"-105.109815, 39.614151",
-        "risk_level":result,
+        "risk_level":result[0],
         "action":-1 
     }
    

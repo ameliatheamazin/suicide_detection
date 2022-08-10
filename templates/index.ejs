@@ -3,7 +3,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Suicide Detection System</title>
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
         <!-- Bootstrap 5 CSS -->
         <link 
@@ -17,7 +17,7 @@
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <nav class="navbar" style="background-color: #242424;">
             <div class="container-fluid">
               <a class="navbar-brand" href="#" style="color:white">Suicide Detection System</a>
@@ -31,7 +31,7 @@
 
 
     </head>
-    <body>
+    <body style="background-color:#fff9f9">
         <!-- Modal -->
         <div id="modalWrap">
             <div class="modal" tabindex="-1">
@@ -56,158 +56,216 @@
                 </div>
             </div>
         </div>  
-        <!-- /.modal -->
-
+        <div class="row">
+            <div class="col-9">
                 <!--list container-->
-                <div class="container mt-3">
-                <div role="tabpanel">
-                    <!-- List group -->
-                    <div class="list-group justify-content-center flex-row mb-2" id="myList" role="tablist">
-                        
-                        <button class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#pending" role="tab" style="outline:none;">
-                            Pending Review
-                            {% if all_tweets %}
-                            {% for tweet in all_tweets  %}
-                            {% if tweet.action==-1 and tweet.risk_level==2 %}
-                            <span class="position-absolute top-0 start-0 translate-middle p-2 bg-danger border border-light rounded-circle">
-                                <span class="visually-hidden">New alerts</span>
-                              </span>
-                            {% endif %}
-                            {% endfor %}
-                            {% endif %}
-                        </button>
-                            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#viewAll" role="tab">View All Tweets</a>
-                    </div>
-                </div> 
-                    <!-- Tab panes -->
-                    <div class="tab-content row">
-                        <!--Pending Tab-->
-                        <div class="tab-pane active" id="pending" role="tabpanel">
-                            <table class="table align-middle mb-0 bg-white table-bordered mt-3 table-hover">
-                                <thead class="bg-light">
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Content</th>
-                                    <th scope="col">Author</th>
-                                    <th scope="col">Date & Time of Tweet</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                <div class="container mt-4">
+                    <div role="tabpanel">
+                        <!-- List group -->
+                        <div class="list-group justify-content-center flex-row mb-2" id="myList" role="tablist">
+                            
+                            <button class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#pending" role="tab" style="outline:none;">
+                                Pending Review
                                 {% if all_tweets %}
                                 {% for tweet in all_tweets  %}
                                 {% if tweet.action==-1 and tweet.risk_level==2 %}
-                                <tr>
-                                    
-                                        <th scope="row">{{ loop.index }}</th>
-                                        <td> {{ tweet.content }}</li>
-                                        <td> {{ tweet.author }}</li>
-                                        <td> {{ tweet.date_time }}</li>
-                                        <td> {{ tweet.location }}</li>
-                                        <td> <a class="btn" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}" style="background-color: 	#505c7c;color:white">Select Action</a></li>
-                                    
-                                </tr>
-                                <!-- Modal -->
-                                {% include 'updateModal.ejs' %}
-
-                                <!-- /.modal -->
+                                <span class="position-absolute top-0 start-0 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                    <span class="visually-hidden">New alerts</span>
+                                  </span>
                                 {% endif %}
                                 {% endfor %}
                                 {% endif %}
-                                </tbody>
-                            </table>
+                            </button>
+                                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#viewAll" role="tab">View All Tweets</a>
                         </div>
-                        
-                        <!--All Tweets Tab-->
-                        <div class="tab-pane" id="viewAll" role="tabpanel">
-                            <table class="table align-middle mb-0 bg-white table-bordered mt-3 table-hover">
-                                <thead class="bg-light">
-                                <tr>
-                                    <th scope="col">No</th>
-                                    <th scope="col">Content</th>
-                                    <th scope="col">Author</th>
-                                    <th scope="col">Date & Time of Tweet</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Status/ Selected Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% if all_tweets %}
-                                {% for tweet in all_tweets  %}
-                                
-                                <tr>
-                                    
-                                        <th scope="row">{{ loop.index }}</th>
-                                        <td> {{ tweet.content }}</td>
-                                        <td> {{ tweet.author }}</td>
-                                        <td> {{ tweet.date_time }}</td>
-                                        <td> {{ tweet.location }}</td>
-                                        <td> 
+                    </div> 
+                        <!-- Tab panes -->
+                        <div class="tab-content row">
+                            <!--Pending Tab-->
+                            <div class="tab-pane active" id="pending" role="tabpanel">
+                                <table class="table align-middle mb-0 bg-white table-bordered mt-3 table-hover">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Content</th>
+                                        <th scope="col">Author</th>
+                                        <th scope="col">Date & Time of Tweet</th>
+                                        <th scope="col">Location</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if all_tweets %}
+                                    {% for tweet in all_tweets|reverse %}
+                                    {% if tweet.action==-1 and tweet.risk_level==2 %}
+                                    <tr>
                                         
-                                         {% if tweet.action==-1%}
-                                            {% if tweet.risk_level==0 %}
-                                            <span class="badge bg-secondary"> No risk detected
-                                            {% elif tweet.risk_level==1 %}
-                                            <span class="badge bg-success">Default message sent
-                                            {% else %}
-                                            <span class="badge bg-warning text-dark">Pending Review
-                                         {% endif %}
-                                         
-                                         {% elif tweet.action==0 %}
-                                         <span class="badge bg-success">Safe to Ignore. Default message sent
-                                        </span>
-                                        <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark" href="#" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}">Update Action</button>
-                                         {% else %}
-                                         <span class="badge bg-warning text-dark">Alert the Authorities</span>
-                                         <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark"  href="#" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}" >Update Action</button>
-                                         
-                                          {% endif %}
-                                          
+                                            <th scope="row">{{ tweet.id }}</th>
+                                            <td> {{ tweet.content }}</li>
+                                            <td> <a href="https://www.twitter.com/{{ tweet.author }}">@{{ tweet.author }}</a></li>
+                                            <td> {{ tweet.date_time }}</li>
+                                            <td> {{ tweet.location }}</li>
+                                            <td> <a class="btn" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}" style="background-color: 	#505c7c;color:white">Select Action</a></li>
                                         
-                                        <!-- Modal -->
-                                       
-                                        
-                                       
-                                        
-                                        {% include 'updateModal.ejs' %}
-                                         <!-- /.modal -->
-                                        </td>
-                                </tr>
-                                
-                                
-                                
-                                {% endfor %}
-                                {% endif %}
-                                </tbody>
-                            </table>
+                                    </tr>
+                                    <!-- Modal -->
+                                    {% include 'updateModal.ejs' %}
+    
+                                    <!-- /.modal -->
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
                             
+                            <!--All Tweets Tab-->
+                            <div class="tab-pane" id="viewAll" role="tabpanel">
+                                <table class="table align-middle mb-0 bg-white table-bordered mt-3 table-hover">
+                                    <thead class="bg-light">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Content</th>
+                                        <th scope="col">Author</th>
+                                        <th scope="col">Date & Time of Tweet</th>
+                                        <th scope="col">Location</th>
+                                        <th scope="col">Status/ Selected Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if all_tweets %}
+                                    {% for tweet in all_tweets|reverse  %}
+                                    
+                                    <tr>
+                                        
+                                            <th scope="row">{{ tweet.id }}</th>
+                                            <td> {{ tweet.content }}</td>
+                                            <td> <a href="https://www.twitter.com/{{ tweet.author }}">@{{ tweet.author }}</a></td>
+                                            <td> {{ tweet.date_time }}</td>
+                                            <td> {{ tweet.location }}</td>
+                                            <td> 
+                                            
+                                             {% if tweet.action==-1%}
+                                                {% if tweet.risk_level==0 %}
+                                                <span class="badge" style="background-color:rgb(54, 162, 235)"> No risk detected
+                                                {% elif tweet.risk_level==1 %}
+                                                <span class="badge bg-warning text-dark">Default message sent
+                                                {% else %}
+                                                <span class="badge btn-danger">Pending Review
+                                             {% endif %}
+                                             
+                                             {% elif tweet.action==0 %}
+                                             <span class="badge bg-warning text-dark">Safe to Ignore. Default message sent
+                                            </span>
+                                            <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark" href="#" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}">Update Action</button>
+                                             {% else %}
+                                             <span class="badge btn-danger">Alert the Authorities</span>
+                                             <button type="button" class="btn btn-link btn-rounded btn-sm fw-bold" data-mdb-ripple-color="dark"  href="#" data-bs-toggle="modal" data-bs-target="#updateModal{{tweet.id}}" >Update Action</button>
+                                             
+                                              {% endif %}
+                                            <!-- Modal -->
+                                            {% include 'updateModal.ejs' %}
+                                             <!-- /.modal -->
+                                            </td>
+                                    </tr>
+                                    
+                                    
+                                    
+                                    {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                                
+    
+                            </div>
+                        </div>
+    
+                </div>
+            </div>
+            <div class="col-3">
+                <!--Card-->
+                <div class="container mt-3">
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm">
+                                <div class="card border" style="box-shadow: 5px 8px 10px #E5E4E2;">
+                                    <div class="card-body">
+                                        <canvas id="graph" width="300" height="300">
+                                            <script>
+                                                const labels= ["Low",'Medium','High']
+                                                var ctx=document.getElementById("graph").getContext("2d");
+                                                var lineChart=new Chart(ctx,{ type:"doughnut", 
+                                                data:{
+                                                    labels: labels,
+                                                    datasets:[{
+                                                        label:"data points",
+                                                        data: {{ risk_totals | safe }},
+                                                        fill:false,
+                                                        backgroundColor: ["rgb(54, 162, 235)","rgb(255, 205, 86)" ,"rgb(255, 99, 132)"],
+                                                        hoverOffset: 4
+                                                    
+                                                    }]},
+                                                options:{
+                                                    responsive:false
+                                                }});
+                                            </script>
+                                        </canvas>                   
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col mt-2">
+                            <div class="col-sm">
+                                <div class="card border" style="box-shadow: 5px 8px 10px #E5E4E2;">
+                                    <div class="card-body">
+                                        <canvas id="lineGraph" width="300" height="300">
 
+                                        </canvas>
+                                        <script>
+                                            const lineLabel= Array({{ all_tweets| length }}).fill(1).map((x, y) => x + y)
+                                            var ctx=document.getElementById("lineGraph").getContext("2d");
+                                            var lineChart=new Chart(ctx,{ type:"line", 
+                                            data:{
+                                                labels: lineLabel,
+                                                datasets:[{
+                                                    label:"data points",
+                                                    data: {{ risk_values | safe }},
+                                                    fill:false,
+                                                    borderColor:"rgb(75,192,192)",
+                                                    lineTension:0.1
+                                                
+                                                }]},
+                                            options:{
+                                                responsive:false
+                                            }});
+                                        </script>                 
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
-                
-                {% if showResultModal and tweetID %}
-                {% include 'resultModal.ejs' %}
-                <script>     
-                    resultModal=document.getElementById('resultModal')
-                    var modal=new bootstrap.Modal(resultModal.querySelector('.modal'));
-                    modal.show();
-                </script>
-                {% endif %}
+            </div>
+        </div>
+        <!--Modal Scripts-->
+        {% if showResultModal and tweetID %}
+        {% include 'resultModal.ejs' %}
+        <script>     
+            resultModal=document.getElementById('resultModal')
+            var modal=new bootstrap.Modal(resultModal.querySelector('.modal'));
+            modal.show();
+        </script>
+        {% endif %}
 
-                {% if showInfoModal and tweetID %}
-                {% include 'infoModal.ejs' %}
-                <script>     
-                    infoModal=document.getElementById('infoModal')
-                    var modal=new bootstrap.Modal(infoModal.querySelector('.modal'));
-                    modal.show();
-                </script>
-                {% endif %}
-
-                
-  
+        {% if showInfoModal and tweetID %}
+        {% include 'infoModal.ejs' %}
+        <script>     
+            infoModal=document.getElementById('infoModal')
+            var modal=new bootstrap.Modal(infoModal.querySelector('.modal'));
+            modal.show();
+        </script>
+        {% endif %}
     <script>
 
         const showCreateModal=()=>{
@@ -215,13 +273,6 @@
             var modal=new bootstrap.Modal(modalWrap.querySelector('.modal'));
         modal.show();
         }
-
-
-
-
-    </script>
-
-
-            
+    </script>      
     </body>
 </html>
