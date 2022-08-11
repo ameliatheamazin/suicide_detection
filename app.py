@@ -71,7 +71,9 @@ def set_action(id):
         #print(len(all_tweets))
         all_tweets[id-1]['action']=int(action)
         print(all_tweets)
-    return render_template('index.ejs',all_tweets=all_tweets,showInfoModal=True,tweetID=id)
+        risk_values = [tweet.get('risk_level') for tweet in all_tweets]
+        risk_totals=get_risk_totals()
+    return render_template('index.ejs',all_tweets=all_tweets,showInfoModal=True,tweetID=id, risk_values=risk_values,risk_totals=risk_totals)
 
 def get_risk_totals():
      global all_tweets
