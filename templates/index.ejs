@@ -76,7 +76,7 @@
                                 {% endfor %}
                                 {% endif %}
                             </button>
-                                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#viewAll" role="tab">View All Tweets</a>
+                                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#viewAll" role="tab">View All Tweets <span class="badge bg-secondary ml-1">{{ all_tweets | length}}</span></a>
                         </div>
                     </div> 
                         <!-- Tab panes -->
@@ -205,9 +205,24 @@
                                                         hoverOffset: 4
                                                     
                                                     }]},
-                                                options:{
-                                                    responsive:false
-                                                }});
+                                                    options:{
+                                                        responsive:false,
+                                                        plugins: {
+                                                            title: {
+                                                                display: true,
+                                                                text: 'Total Number of Tweets per Risk Level',
+                                                                font:{
+                                                                    weight: 'bold',
+                                                                    size: 13
+                                                                },
+                                                                padding: {
+                                                                    top: 10,
+                                                                    bottom: 10
+                                                                }
+                                                            }
+                                                        }   
+                                                    }
+                                                });
                                             </script>
                                         </canvas>                   
                                     </div>
@@ -229,16 +244,45 @@
                                             data:{
                                                 labels: lineLabel,
                                                 datasets:[{
-                                                    label:"data points",
+                                                    label:"Risk",
                                                     data: {{ risk_values | safe }},
                                                     fill:false,
                                                     borderColor:"rgb(75,192,192)",
-                                                    lineTension:0.1
+                                                    lineTension:0.1,
                                                 
                                                 }]},
                                             options:{
-                                                responsive:false
-                                            }});
+                                                responsive:false,
+                                                scales: {
+                                                    x: {
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Tweet ID'
+                                                        }
+                                                    },
+                                                    y: {
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Suicide Risk Level'
+                                                        }
+                                                    }
+                                                },
+                                                plugins: {
+                                                    title: {
+                                                        display: true,
+                                                        text: 'Line Chart of Suicide Risk Level',
+                                                        font:{
+                                                            weight: 'bold',
+                                                            size: 15
+                                                        },
+                                                        padding: {
+                                                            top: 10,
+                                                            bottom: 10
+                                                        }
+                                                    }
+                                                }   
+                                            }
+                                        });
                                         </script>                 
                                     </div>
                                 </div>

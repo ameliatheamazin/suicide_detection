@@ -33,7 +33,6 @@ def predict():
     all_tweets=[]
     all_features=pd.DataFrame()
     model=pickle.load(open('model-final.pkl','rb'))
-    tfidf=pickle.load(open('tfidf-final.pkl','rb'))
     #nltk.download('omw-1.4')
     if request.method=='POST':
         data=request.form['tweet']
@@ -47,13 +46,18 @@ def predict():
         all_features = pd.DataFrame(tagged,columns=["CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", 
                     "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$","RB", "RBR", "RBS", "RP", "TO", "UH",
                     "VB", "VBD", "VBG","VBN", "VBP","VBZ", "WDT", "WP", "WP$","WRB"])
-        all_features['sentiment']=extract_sentiment(cleaned_text)
-        
-        tf_idf = tfidf.transform([cleaned_text]).toarray()
-        tf_idf_df=pd.DataFrame(tf_idf,columns=tfidf.get_feature_names_out())
+        all_features['sentiment']=extract_sentiment(cleaned_text)        
+        # tf_idf = tfidf.transform([cleaned_text]).toarray()
+        tf_idf_df=extract_tf_idf(cleaned_text)
+
+        #final feature set
         all_features=all_features.merge(tf_idf_df,left_index=True,right_index=True)
+
+        #model prediction
         result = model.predict(all_features.values)
         print(result)
+        
+        #prepare data to be passed back
         all_tweets=store_tweet(data,result)
         tweetID=all_tweets[-1]['id']
         risk_values = [tweet.get('risk_level') for tweet in all_tweets]
@@ -216,8 +220,11 @@ def extract_sentiment(full_text):
 
     return score
 
-
-
+def extract_tf_idf(cleaned_text):
+    tfidf=pickle.load(open('tfidf-final.pkl','rb'))
+    tf_idf = tfidf.transform([cleaned_text]).toarray()
+    tf_idf_df=pd.DataFrame(tf_idf,columns=tfidf.get_feature_names_out())
+    return tf_idf_df
 
 if __name__=="__main__":
     app.run(debug=True) 
