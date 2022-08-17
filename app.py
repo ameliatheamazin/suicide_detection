@@ -23,9 +23,17 @@ from sklearn.ensemble import RandomForestClassifier
 app=Flask(__name__)
 all_tweets=[]
 
-@app.route("/") #main page
+#Error Handling
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('error.ejs'), 404
+
+#Main Page
+@app.route("/") 
 def home_page():
-    return render_template('index.ejs',all_tweets=all_tweets)
+    risk_values = [tweet.get('risk_level') for tweet in all_tweets]
+    risk_totals=get_risk_totals()
+    return render_template('index.ejs',all_tweets=all_tweets, risk_values=risk_values,risk_totals=risk_totals)
 
 @app.route('/',methods = ['POST', 'GET'])
 def predict():
@@ -39,22 +47,25 @@ def predict():
         
         ##preprocessing steps
         cleaned_data=clean(data)
-        cleaned_token=word_lemmatizer(cleaned_data)
-        cleaned_text=combine_clean_text(cleaned_token)
-        tagged=pos_tag_features(cleaned_token)
-        tagged=np.reshape(tagged, (1, 35))
-        all_features = pd.DataFrame(tagged,columns=["CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", 
-                    "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$","RB", "RBR", "RBS", "RP", "TO", "UH",
-                    "VB", "VBD", "VBG","VBN", "VBP","VBZ", "WDT", "WP", "WP$","WRB"])
-        all_features['sentiment']=extract_sentiment(cleaned_text)        
-        # tf_idf = tfidf.transform([cleaned_text]).toarray()
-        tf_idf_df=extract_tf_idf(cleaned_text)
+        if (len(cleaned_data) == 0 or cleaned_data.isspace()):
+            result=[0]
+        else:
+            cleaned_token=word_lemmatizer(cleaned_data)
+            cleaned_text=combine_clean_text(cleaned_token)
+            tagged=pos_tag_features(cleaned_token)
+            tagged=np.reshape(tagged, (1, 35))
+            all_features = pd.DataFrame(tagged,columns=["CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", 
+                        "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$","RB", "RBR", "RBS", "RP", "TO", "UH",
+                        "VB", "VBD", "VBG","VBN", "VBP","VBZ", "WDT", "WP", "WP$","WRB"])
+            all_features['sentiment']=extract_sentiment(cleaned_text)        
+            # tf_idf = tfidf.transform([cleaned_text]).toarray()
+            tf_idf_df=extract_tf_idf(cleaned_text)
 
-        #final feature set
-        all_features=all_features.merge(tf_idf_df,left_index=True,right_index=True)
+            #final feature set
+            all_features=all_features.merge(tf_idf_df,left_index=True,right_index=True)
 
-        #model prediction
-        result = model.predict(all_features.values)
+            #model prediction
+            result = model.predict(all_features.values)
         print(result)
         
         #prepare data to be passed back
@@ -62,6 +73,7 @@ def predict():
         tweetID=all_tweets[-1]['id']
         risk_values = [tweet.get('risk_level') for tweet in all_tweets]
         risk_totals=get_risk_totals()
+        # print(all_tweets)
         return render_template('index.ejs',result=result,all_tweets=all_tweets,showResultModal=True,tweetID=tweetID, risk_values=risk_values,risk_totals=risk_totals)
         
     return render_template('index.ejs')
@@ -74,7 +86,7 @@ def set_action(id):
         global all_tweets
         #print(len(all_tweets))
         all_tweets[id-1]['action']=int(action)
-        print(all_tweets)
+        # print(all_tweets)
         risk_values = [tweet.get('risk_level') for tweet in all_tweets]
         risk_totals=get_risk_totals()
     return render_template('index.ejs',all_tweets=all_tweets,showInfoModal=True,tweetID=id, risk_values=risk_values,risk_totals=risk_totals)

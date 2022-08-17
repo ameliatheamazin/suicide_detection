@@ -10,10 +10,7 @@
                     <div class="modal-body">
                         <i class="fas fa-bell fa-4x animated rotateIn mb-4"></i>
                         <p class="lead">Result:</p>
-                        {% if result==0 %}
-                        <span class="badge text-wrap fs-6" style="background-color:rgb(54, 162, 235)">No risk detected</span>
-
-                        {% elif result==1 %}
+                        {% if result==1 %}
                         <span class="badge bg-warning text-dark text-wrap fs-6">Medium risk detected</span>
                         <br><br>
                         <p style="font-size: medium;">
@@ -37,8 +34,11 @@
                           </div>
                         
 
-                        {% else %}
+                        {% elif result==2 %}
                         <span class="badge btn-danger text-wrap fs-6">High risk detected. Tweet flagged for further review. </span>
+                        {% else %}
+                        <span class="badge text-wrap fs-6" style="background-color:rgb(54, 162, 235)">No risk detected</span>
+
                         {% endif %}
                     </div>
                     <div class="modal-footer">
