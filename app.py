@@ -57,13 +57,15 @@ def predict():
             all_features = pd.DataFrame(tagged,columns=["CC", "CD", "DT", "EX", "FW", "IN", "JJ", "JJR", "JJS", "LS", "MD", 
                         "NN", "NNS", "NNP", "NNPS", "PDT", "POS", "PRP", "PRP$","RB", "RBR", "RBS", "RP", "TO", "UH",
                         "VB", "VBD", "VBG","VBN", "VBP","VBZ", "WDT", "WP", "WP$","WRB"])
-            all_features['sentiment']=extract_sentiment(cleaned_text)        
+            all_features.to_csv('f1.csv')           
+            all_features['sentiment']=extract_sentiment(cleaned_text)    
+            # print(all_features['sentiment'])    
             # tf_idf = tfidf.transform([cleaned_text]).toarray()
             tf_idf_df=extract_tf_idf(cleaned_text)
 
             #final feature set
             all_features=all_features.merge(tf_idf_df,left_index=True,right_index=True)
-
+            # print(all_features)
             #model prediction
             result = model.predict(all_features.values)
         print(result)
