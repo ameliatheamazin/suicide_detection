@@ -19,7 +19,7 @@
 <h3 align="center">Suicide Ideation Detection and Response system for Textual Social Media Posts</h3>
 
   <p align="center">
-    Social media applications exist as a fundamental medium of communication til the extent that people treat social media as a “Safe space” for them to express their suicide tendencies. Unfortunately, this puts social media users and the company themselves at risk of harmful and inappropriate content that threatens the safety of the platform. Hence, this project focuses on developing a comprehensive web application that supports real-time classification of tweets into three suicide risk categories and triggers a tailored crisis response that targets specific suicide risk levels. 
+    Social media applications exist as a fundamental medium of communication up to the extent that people treat these platforms as a “safe space” for them to express their suicide tendencies. Unfortunately, this puts social media users and the company themselves at risk of harmful and inappropriate content that threatens the safety of the platform. Hence, this project focuses on developing a comprehensive web application that supports real-time classification of tweets into three suicide risk categories and triggers a tailored crisis response that targets specific suicide risk levels. 
     <br />
     <a href="https://github.com/ameliatheamazin/suicide_detection/tree/main/Images/Project.gif"><strong>View Prototype Demo »</strong></a>
     <br />
@@ -40,7 +40,11 @@ This project covers the end-to-end activities from model development, which uses
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Key Contributions
 
+* Analysis on findings: Presented detailed analysis on the sentiment and linguistic characteristics associated with specific levels of suicide risk, providing increased understanding on how these patterns aid the model in discerning different levels of suicide risk
+* Improved model: Developed a trained model for accurate detection of different levels of risk associated with suicide ideation within social media textual posts with an increased performance when benchmarked with related work
+* Validated response mechanism: Presented a validated approach towards streamlining the integration of suicide ideation detection and response under a single, fully functional web application for other social media sites to seamlessly integrate this system into their platform
 
 ### Development Tools Used
 
@@ -62,8 +66,10 @@ This project covers the end-to-end activities from model development, which uses
 
 ### Key Findings
 
-* High quality feature sets built from TF-IDF and sentiment score from VADER improved the predictive ability of the model
-* Model leveraged sentiment and linguistic patterns from feature set to discern key terms that are used to communicate different degrees of suicide ideation
+* Model was able to utilise the linguistic and grammatical patterns found within the sentiment score, TF-IDF and PoS tags to communicate different degrees of suicide ideation
+* Choice of words used in context has a direct influence on the sentiment score and TF-IDF. Hence, sufficient context is crucial to provide more information for the model to learn effectively 
+* System showed promising results when tested with random samples, which proves ability of the model to generalize unseen data and thus verifies the efficacy of the
+system in real-time environment
 
 
 
