@@ -19,7 +19,7 @@
 <h3 align="center">Suicide Ideation Detection and Response system for Textual Social Media Posts</h3>
 
   <p align="center">
-    Social media applications exist as a fundamental medium of communication up to the extent that people treat these platforms as a “safe space” for them to express their suicide tendencies. Unfortunately, this puts social media users and the company themselves at risk of harmful and inappropriate content that threatens the safety of the platform. Hence, this project focuses on developing a comprehensive web application that supports real-time classification of tweets into three suicide risk categories and triggers a tailored crisis response that targets specific suicide risk levels. 
+    <b>This is my Final Year project which aims to develop a comprehensive web application that supports real-time classification of tweets into three suicide risk categories, and triggers a tailored crisis response.</b> The crisis response is targeted towards specific suicide risk levels, and includes a curated care message, links to relevant mental health resources and contact details of local authorities. The dataset was collected through Twitter API. 
     <br />
     <a href="https://github.com/ameliatheamazin/suicide_detection/tree/main/Images/Project.gif"><strong>View Prototype Demo »</strong></a>
     <br />
@@ -58,7 +58,7 @@ This project covers the end-to-end activities from model development, which uses
 <img src="Images/Overview.jpg" alt="System Overview" width="600" height="350">
 </div>
 
-* First Phase: Preparation of Twitter dataset, model development and training
+* First Phase: Preparation of Twitter dataset, data cleaning, preprocessing, feature extraction, model development and training
 * Second Phase: Model integration into dynamic web application
 * Last Phase: Implementation of automated response for tweets labelled with medium to high risk to receive automated support message; while high risk tweets to be automatically flagged for review by a moderator
 
@@ -66,7 +66,7 @@ This project covers the end-to-end activities from model development, which uses
 
 ### Key Findings
 
-* Model was able to utilise the linguistic and grammatical patterns found within the sentiment score, TF-IDF and PoS tags to communicate different degrees of suicide ideation
+* Model was able to utilise the linguistic and grammatical patterns found within the sentiment score, TF-IDF and PoS tags to communicate different degrees of suicide ideation.
 * Choice of words used in context has a direct influence on the sentiment score and TF-IDF. Hence, sufficient context is crucial to provide more information for the model to learn effectively 
 * System showed promising results when tested with random samples, which proves ability of the model to generalize unseen data and thus verifies the efficacy of the
 system in real-time environment
