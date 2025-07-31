@@ -29,12 +29,14 @@
 
 <!-- PROJECT LOGO -->
 <br />
+<h3 align="center">Suicide Ideation Detection System for Tweets</h3>
+
 <div align="center">
   <a href="https://github.com/ameliatheamazin/suicide_detection">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+      <img src="App.png" alt="App" style="background-color: white; max-width: 90%; height: auto; display: block; margin: 0 auto;">
   </a>
 
-<h3 align="center">Suicide Ideation Detection System for Tweets</h3>
+
 
   <p align="center">
     <br />
@@ -84,6 +86,10 @@ A final-year project aimed at building a real-time web application that integrat
 <!-- OVERVIEW -->
 ## Overview
 
+
+<img src="Overview.png" alt="System Overview" style="background-color: white; max-width: 90%; height: auto; display: block; margin: 0 auto;">
+
+
 The system classifies tweets into multiple suicide risk levels and can respond automatically or flag for moderation. It incorporates natural language processing (NLP), feature extraction techniques, machine learning, and real-time monitoring.
 
 ### Features
@@ -97,6 +103,7 @@ The system classifies tweets into multiple suicide risk levels and can respond a
 * Automated responses for high-risk posts
 
 * Flask web app for demonstration
+  
 
 ### Tech Stack
 
